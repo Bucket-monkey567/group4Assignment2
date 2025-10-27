@@ -31,5 +31,5 @@ public interface StackADT<T> {
      * <p><b>Precondition:</b> None.</p>
      * <p><b>Postcondition:</b> The state of the stack remains unchanged.</p>
      */
-    int size();
+    int size(); //(Alex)
 }
