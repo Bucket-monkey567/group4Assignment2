@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Stack;
-
+	
 public class XMLParser {
     // Stack and queues store Tag objects instead of plain strings
     Stack<Tag> stack;
@@ -137,3 +137,4 @@ public class XMLParser {
         return openingTag;
     }
 }
+
