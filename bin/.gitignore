@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-/unitTests/
-/exceptions/
-=======
-/exceptions/
-/unitTests/
 /appDomain/
->>>>>>> refs/heads/mrinal_j
+/exceptions/
 /implementations/
+/unitTests/
+/utilities/
