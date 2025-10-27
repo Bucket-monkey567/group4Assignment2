@@ -1,5 +1,8 @@
 /appDomain/
 /exceptions/
 /implementations/
+<<<<<<< HEAD
+=======
 /unitTests/
+>>>>>>> main
 /utilities/

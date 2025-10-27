@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CompanyData>
+    <Department name="Engineering">
+        <Team id="T101">
+            <Member role="Lead">
+                <Name>John Doe</name>
+                <Email>john.engineer@company.com
+            </Member>
+            <Member role="Developer">
+                <Name>Jane Doe</Name>
+                <Skills>
+                    <Skill>Java</Skill>
+                    <Skill>Python
+                </Skills>
+            </Member
+        </Team>
+    </Department>
+
+    <Department name="HR">
+        <Team id="T201">
+            <Member role="Manager">
+                <Name>Lisa Ray</Name>
+                <Email>lisa.hr@company.com</email>
+            </Member>
+            <RandomTag></ExtraClosingTag>
+        </Team>
+        <Team id="T202">
+            <Member role="Assistant">
+                <Name>Chris Paul</Name>
+        <!-- Missing </Member> and </Team> -->
+    </Department>
+
+    <Department name=Finance">
+        <Team id="T301">
+            <Member role="Analyst">
+                <Name>Alan Turing</Name>
+            </Member>
+            <Member role="Data">
+                <Name>Grace Hopper</Name>
+                <SkillSet>
+                    <Skill>Mainframe</skill>
+                    <Skill>COBOL</Skill>
+                </WrongClosing>
+            </Member>>
+        </Team>
+    </Department>
+
+    <Department name="Support">
+        <Team id="T401">
+            <Member role="Agent">
+                <Name>Michael "Mike" Smith</Name>
+                <Email>mike.support@company & help.com</Email>
+            </Member>
+        </Team_
+    </Department>
+</CompanyData>
