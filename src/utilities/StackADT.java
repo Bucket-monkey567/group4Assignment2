@@ -12,7 +12,6 @@ import java.util.Iterator;
  *
  * @param <T> the type of elements stored in the stack
  */
-public interface StackADT<T> {
 public interface StackADT<T> extends Iterable<T> {
 
 	/**
