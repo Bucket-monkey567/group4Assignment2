@@ -43,7 +43,7 @@ public interface QueueADT<T> {
      * <p><b>Precondition:</b> The queue must contain at least one element.</p>
      * <p><b>Postcondition:</b> The queue remains unchanged.</p>
      */
-    public T getFront() throws EmptyQueueException;
+    public T peek() throws EmptyQueueException;
     
     /**
      * Retrieves (but does not remove) the element at the rear of the queue.
@@ -64,6 +64,16 @@ public interface QueueADT<T> {
      * <p><b>Postcondition:</b> The state of the queue remains unchanged.</p>
      */
     public boolean isEmpty();
+    
+    /**
+     * Checks whether the queue is full.
+     * 
+     * @return False for dynamically sized books
+     * 
+     * <p><b>Precondition:</b> None.</p>
+     * <p><b>Postcondition:</b> The state of the queue remains unchanged.</p>
+     */
+    public boolean isFull();
 
     /**
      * Returns the current number of elements in the queue.
@@ -74,4 +84,64 @@ public interface QueueADT<T> {
      * <p><b>Postcondition:</b> The queue remains unchanged.</p>
      */
     public int size();
+    
+    /**
+     * Removes all elements from the queue.
+     * 
+     * <p><b>Precondition:</b> None.</p>
+     * <p><b>Postcondition:</b> The queue is empty</p>
+     */
+    public void dequeueAll();
+    
+    /**
+     * Checks if the queue contains the specified element.
+     *
+     * @param element the element to find
+     * @return true if the queue contains the element, false otherwise
+     * @throws NullPointerException if element is null
+     */
+    public boolean contains(T element);
+
+    /**
+     * Searches for the specified element in the queue and returns its 1-based position
+     * from the front (head).
+     *
+     * @param element the element to find
+     * @return integer that corresponds with the position of the element if found, -1 if not found
+     */
+    public int search(T element);
+
+    /**
+     * Shows all elements as an array containing in proper order
+     * 
+     * 
+     * @return An array containing all the elements in the queue 
+     */
+    public Object[] toArray();
+    
+    /**
+     * puts all elements into an array if the array big enough
+     * 
+     * 
+     * @param array: the array with the limited size
+     * @return the queue converted to the array
+     */
+    public <E> E[] toArray(E[] array);
+    
+    /**
+     * compares this queue to another queue for equality
+     * 
+     * @param other the other queue to compare with
+     * @return True if both queues contain the same element in the same order
+     */
+    
+    public boolean equals(QueueADT<T> other);
+    
+    /**
+     * iterates the over the items in the queue
+     * 
+     * @return the iterator that iterates over the items
+     */
+    public Iterator<T> iterator();
+    
 }
