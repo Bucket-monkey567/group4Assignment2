@@ -4,6 +4,7 @@ import exceptions.StackUnderflowException;
 import java.util.Iterator;
 
 /**
+ * @author Alex Raagas, Noah
  * The StackADT interface defines the standard behavior of a Last-In-First-Out (LIFO)
  * data structure, where elements are added and removed from the top of the stack.
  *
@@ -107,7 +108,7 @@ public interface StackADT<T> extends Iterable<T> {
      * @param copy the array into which the elements will be stored, if it is large enough
      * @return an array containing all of the elements in this stack
      */
-    T[] toArray(T[] copy);
+    public T[] toArray(T[] copy);
     
     /**
      * Returns an iterator over the elements in this stack.
@@ -116,7 +117,7 @@ public interface StackADT<T> extends Iterable<T> {
      * @return an iterator over the stack elements
      */
     @Override
-    Iterator<T> iterator();
+    public Iterator<T> iterator();
     
 
     /**
