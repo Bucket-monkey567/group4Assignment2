@@ -24,7 +24,7 @@ public interface StackADT<T> extends Iterable<T> {
      * <p><b>Precondition:</b> The stack is initialized and not full (if a capacity is defined).</p>
      * <p><b>Postcondition:</b> The element is added to the top of the stack.</p>
      */
-    void push(T element) throws NullPointerException;
+    public void push(T element) throws NullPointerException;
 
     /**
      * Removes (pops) and returns the element at the top of the stack.
@@ -35,7 +35,7 @@ public interface StackADT<T> extends Iterable<T> {
      * <p><b>Precondition:</b> The stack is not empty.</p>
      * <p><b>Postcondition:</b> The top element is removed and returned.</p>
      */
-    T pop() throws StackUnderflowException;
+    public T pop() throws StackUnderflowException;
 
     /**
      * Returns (but does not remove) the element currently at the top of the stack.
@@ -46,7 +46,7 @@ public interface StackADT<T> extends Iterable<T> {
      * <p><b>Precondition:</b> The stack is not empty.</p>
      * <p><b>Postcondition:</b> The stack remains unchanged.</p>
      */
-    T top() throws StackUnderflowException;
+    public T top() throws StackUnderflowException;
     
     /**
      * Checks whether the stack contains any elements.
@@ -56,7 +56,7 @@ public interface StackADT<T> extends Iterable<T> {
      * <p><b>Precondition:</b> None.</p>
      * <p><b>Postcondition:</b> The state of the stack remains unchanged.</p>
      */
-    boolean isEmpty();
+    public boolean isEmpty();
 
     /**
      * Returns the number of elements currently stored in the stack.
@@ -66,14 +66,14 @@ public interface StackADT<T> extends Iterable<T> {
      * <p><b>Precondition:</b> None.</p>
      * <p><b>Postcondition:</b> The state of the stack remains unchanged.</p>
      */
-    int size(); //(Alex)
+    public int size(); //(Alex)
     
     /**
      * Removes all elements from the stack, leaving it empty.
      *
      * <p><b>Postcondition:</b> The stack is empty.</p>
      */
-    void clear();
+    public void clear();
     
     /**
      * Determines whether this stack contains a specific element.
@@ -81,7 +81,7 @@ public interface StackADT<T> extends Iterable<T> {
      * @param obj the element to search for
      * @return true if the element exists in the stack; false otherwise
      */
-    boolean contains(T obj);
+    public boolean contains(T obj);
     
     /**
      * Searches for an element in the stack and returns its 1-based position
@@ -90,7 +90,7 @@ public interface StackADT<T> extends Iterable<T> {
      * @param obj the element to search for
      * @return the 1-based position of the element, or -1 if not found
      */
-    int search(T obj);
+    public int search(T obj);
     
     /**
      * Returns an array containing all of the elements in this stack.
@@ -98,7 +98,7 @@ public interface StackADT<T> extends Iterable<T> {
      *
      * @return an array containing all of the elements in this stack
      */
-    Object[] toArray();
+    public Object[] toArray();
     
     /**
      * Returns an array containing all of the elements in this stack,
@@ -128,5 +128,5 @@ public interface StackADT<T> extends Iterable<T> {
      * @param that the other stack to compare
      * @return true if both stacks are equal; false otherwise
      */
-    boolean equals(StackADT<T> that);
+    public boolean equals(StackADT<T> that);
 }
