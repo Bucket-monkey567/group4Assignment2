@@ -126,7 +126,7 @@ public interface QueueADT<T> {
      * @param array: the array with the limited size
      * @return the queue converted to the array
      */
-    public <E> E[] toArray(E[] array);
+    public <E> E[] toArray(E[] array); 
     
     /**
      * compares this queue to another queue for equality
