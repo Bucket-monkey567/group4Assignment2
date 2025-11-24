@@ -4,22 +4,25 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.EmptyStackException;
+
+import exceptions.EmptyQueueException;
+import implementations.MyQueue;
+import implementations.MyStack;
 	
 public class XMLParser {
     // Stack and queues store Tag objects instead of plain strings
-    Stack<Tag> stack;
-    LinkedList<Tag> errorQ;
-    LinkedList<Tag> extrasQ;
+    MyStack<Tag> stack;
+    MyQueue<Tag> errorQ;
+    MyQueue<Tag> extrasQ;
 
     int counter;
 
     public XMLParser() {
         counter = 1;
-        stack = new Stack<>();
-        errorQ = new LinkedList<>();
-        extrasQ = new LinkedList<>();
+        stack = new MyStack<>();
+        errorQ = new MyQueue<>();
+        extrasQ = new MyQueue<>();
     }
 
     public void parse(File file) {
@@ -68,64 +71,85 @@ public class XMLParser {
             if (!stack.isEmpty() && stack.peek().tag.equals(tagName)) {
                 // Normal match
                 stack.pop();
-            } else if (!errorQ.isEmpty() && tagName.equals(errorQ.peek().tag)) {
-            	errorQ.poll();
-            } else if (stack.isEmpty()) {
-            	stack.add(new Tag(tag, lineNumber));
-            } else {
-                // Look for the matching opening tag in the stack
-            	boolean found = false;
-            	Stack<Tag> temp = new Stack<>();
-            	LinkedList<Tag> originalErrorQ = new LinkedList<>(errorQ); // create a copy of errorQ
+            } else
+				try {
+					if (!errorQ.isEmpty() && tagName.equals(errorQ.peek().tag)) {
+						errorQ.dequeue();
+					} else if (stack.isEmpty()) {
+						stack.push(new Tag(tag, lineNumber));
+					} else {
+					    // Look for the matching opening tag in the stack
+						boolean found = false;
+						MyStack<Tag> temp = new MyStack<>();
+						MyQueue<Tag> originalErrorQ = new MyQueue<>(errorQ); // create a copy of errorQ
 
-            	while (!stack.isEmpty()) {
-            	    Tag t = stack.pop();
-            	    if (t.tag.equals(tagName)) {
-            	        found = true;
-            	        // print errors for any tags that were popped before finding the match
-            	        while (!temp.isEmpty()) {
-            	            Tag tempTag = temp.pop();
-            	            System.out.println("Error at line " + tempTag.line + ": " + tempTag.tag);
-            	        }
-            	        break; // found match, stop popping
-            	    } else {
-            	        // unmatched tag → add to errorQ
-            	        errorQ.add(t);
-            	        temp.push(t);
-            	    }
-            	}
+						while (!stack.isEmpty()) {
+						    Tag t = stack.pop();
+						    if (t.tag.equals(tagName)) {
+						        found = true;
+						        // print errors for any tags that were popped before finding the match
+						        while (!temp.isEmpty()) {
+						            Tag tempTag = temp.pop();
+						            System.out.println("Error at line " + tempTag.line + ": " + tempTag.tag);
+						        }
+						        break; // found match, stop popping
+						    } else {
+						        // unmatched tag → add to errorQ
+						        errorQ.enqueue(t);
+						        temp.push(t);
+						    }
+						}
 
-            	if (!found) {
-            	    // no matching opening tag → restore stack and revert errorQ to original
-            	    while (!temp.isEmpty()) stack.push(temp.pop());
-            	    errorQ = originalErrorQ; // restore errorQ
-            	    extrasQ.add(new Tag(tag, lineNumber));
-            	}
-            }
+						if (!found) {
+						    // no matching opening tag → restore stack and revert errorQ to original
+						    while (!temp.isEmpty()) stack.push(temp.pop());
+						    errorQ = originalErrorQ; // restore errorQ
+						    extrasQ.enqueue(new Tag(tag, lineNumber));
+						}
+					}
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				} catch (EmptyStackException e) {
+					e.printStackTrace();
+				} catch (EmptyQueueException e) {
+					e.printStackTrace();
+				}
         }
     }
 
     private void processRemaining() {
         while (!stack.isEmpty()) {
-            errorQ.add(stack.pop());
+            errorQ.enqueue(stack.pop());
         }
 
         while (!errorQ.isEmpty() && !extrasQ.isEmpty()) {
-            if (!errorQ.peek().tag.equals(extrasQ.peek().tag.replace("/", ""))) {
-            	System.out.println(errorQ.poll().tag + " does not match " + extrasQ.peek().tag);
-            } else {
-            	errorQ.poll();
-            	extrasQ.poll();
-            }
+            try {
+				if (!errorQ.peek().tag.equals(extrasQ.peek().tag.replace("/", ""))) {
+					System.out.println(errorQ.dequeue().tag + " does not match " + extrasQ.peek().tag);
+				} else {
+					errorQ.dequeue();
+					extrasQ.dequeue();
+				}
+			} catch (EmptyQueueException e) {
+				e.printStackTrace();
+			}
         }
         
         System.out.println();
         while (!(errorQ.isEmpty() == extrasQ.isEmpty())) {
         	while (!errorQ.isEmpty()) {
-        		System.out.println("ErrorQ: " + errorQ.poll().tag);
+        		try {
+					System.out.println("ErrorQ: " + errorQ.dequeue().tag);
+				} catch (EmptyQueueException e) {
+					e.printStackTrace();
+				}
         	}
         	while (!extrasQ.isEmpty()) {
-        		System.out.println("ExtrasQ: " + extrasQ.poll().tag);
+        		try {
+					System.out.println("ExtrasQ: " + extrasQ.dequeue().tag);
+				} catch (EmptyQueueException e) {
+					e.printStackTrace();
+				}
         	}        	
         }
     }

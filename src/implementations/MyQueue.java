@@ -19,6 +19,29 @@ public class MyQueue<e> implements QueueADT<e> {
     private Node front;
     private Node rear;
     private int size = 0;
+    
+    // Copy constructor: creates a new queue that is a deep copy of another queue
+    public MyQueue(QueueADT<e> other) throws NullPointerException {
+        if (other == null)
+            throw new NullPointerException("Cannot copy from a null queue");
+
+        // Initialize empty queue
+        this.front = null;
+        this.rear = null;
+        this.size = 0;
+
+        // Copy all elements using the iterator
+        Iterator<e> it = other.iterator();
+        while (it.hasNext()) {
+            this.enqueue(it.next());
+        }
+    }
+    
+    public MyQueue() {
+        this.front = null;
+        this.rear = null;
+        this.size = 0;    	
+    }
 
 	@Override
 	public void enqueue(e toAdd) throws NullPointerException {

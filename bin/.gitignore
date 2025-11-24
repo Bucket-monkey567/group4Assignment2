@@ -1,4 +1,5 @@
-/utilities/
+/appDomain/
+/exceptions/
 /implementations/
 /unitTests/
-/appDomain/
+/utilities/
