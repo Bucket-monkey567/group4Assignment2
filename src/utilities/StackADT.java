@@ -1,132 +1,132 @@
 package utilities;
 
-import exceptions.StackUnderflowException;
-import java.util.Iterator;
+import java.util.*;
+import java.io.*;
 
 /**
- * @author Alex Raagas, Noah
- * The StackADT interface defines the standard behavior of a Last-In-First-Out (LIFO)
- * data structure, where elements are added and removed from the top of the stack.
- *
- * <p>This interface includes essential operations to check if the stack is empty and
- * to get its size. Exceptions for invalid operations are defined.</p>
- *
- * @param <T> the type of elements stored in the stack
+ * This is the professional Stack Interface for Object-Oriented Programming 3
+ * (CRPG 304) at the SAIT Polytechnic. This Stack embodies all the standard
+ * Stack operations, and includes several helper methods that will give the data
+ * structure more flexibility and use.
  */
-public interface StackADT<T> extends Iterable<T> {
+public interface StackADT<E>
+{
 
 	/**
-     * Adds (pushes) an element onto the top of the stack.
-     *
-     * @param element the element to be added to the top of the stack
-     * @throws NullPointerException if the specified element is null
-     *
-     * <p><b>Precondition:</b> The stack is initialized and not full (if a capacity is defined).</p>
-     * <p><b>Postcondition:</b> The element is added to the top of the stack.</p>
-     */
-    public void push(T element) throws NullPointerException;
+	 * Pushes an item onto the top of this stack.
+	 * 
+	 * @param toAdd item to be pushed onto the top of the stack.
+	 * @throws NullPointerException when attempting to add a null element to the
+	 *                              stack.
+	 */
+	public void push( E toAdd ) throws NullPointerException;
 
-    /**
-     * Removes (pops) and returns the element at the top of the stack.
-     *
-     * @return the element that was at the top of the stack
-     * @throws StackUnderflowException if the stack is empty
-     *
-     * <p><b>Precondition:</b> The stack is not empty.</p>
-     * <p><b>Postcondition:</b> The top element is removed and returned.</p>
-     */
-    public T pop() throws StackUnderflowException;
+	/**
+	 * Removes the object at the top of this stack and returns that object as the
+	 * value of this function.
+	 * 
+	 * @return the item popped off the top of the stack.
+	 * @throws EmptyStackException if there are not items in the stack.
+	 */
+	public E pop() throws EmptyStackException;
 
-    /**
-     * Returns (but does not remove) the element currently at the top of the stack.
-     *
-     * @return the element at the top of the stack
-     * @throws StackUnderflowException if the stack is empty
-     *
-     * <p><b>Precondition:</b> The stack is not empty.</p>
-     * <p><b>Postcondition:</b> The stack remains unchanged.</p>
-     */
-    public T top() throws StackUnderflowException;
-    
-    /**
-     * Checks whether the stack contains any elements.
-     *
-     * @return true if the stack has no elements; false otherwise
-     *
-     * <p><b>Precondition:</b> None.</p>
-     * <p><b>Postcondition:</b> The state of the stack remains unchanged.</p>
-     */
-    public boolean isEmpty();
+	/**
+	 * Looks at the object at the top of this stack without removing it from the
+	 * stack.
+	 * 
+	 * @return the object at the top of this stack.
+	 * @throws EmptyStackException
+	 */
+	public E peek() throws EmptyStackException;
 
-    /**
-     * Returns the number of elements currently stored in the stack.
-     *
-     * @return the number of elements in the stack
-     *
-     * <p><b>Precondition:</b> None.</p>
-     * <p><b>Postcondition:</b> The state of the stack remains unchanged.</p>
-     */
-    public int size(); //(Alex)
-    
-    /**
-     * Removes all elements from the stack, leaving it empty.
-     *
-     * <p><b>Postcondition:</b> The stack is empty.</p>
-     */
-    public void clear();
-    
-    /**
-     * Determines whether this stack contains a specific element.
-     *
-     * @param obj the element to search for
-     * @return true if the element exists in the stack; false otherwise
-     */
-    public boolean contains(T obj);
-    
-    /**
-     * Searches for an element in the stack and returns its 1-based position
-     * from the top of the stack. The top element has position 1.
-     *
-     * @param obj the element to search for
-     * @return the 1-based position of the element, or -1 if not found
-     */
-    public int search(T obj);
-    
-    /**
-     * Returns an array containing all of the elements in this stack.
-     * The top of the stack corresponds to the first element of the array.
-     *
-     * @return an array containing all of the elements in this stack
-     */
-    public Object[] toArray();
-    
-    /**
-     * Returns an array containing all of the elements in this stack,
-     * using the provided array if it fits.
-     * The top of the stack corresponds to the first element of the array.
-     *
-     * @param copy the array into which the elements will be stored, if it is large enough
-     * @return an array containing all of the elements in this stack
-     */
-    public T[] toArray(T[] copy);
-    
-    /**
-     * Returns an iterator over the elements in this stack.
-     * The iterator does not support the remove operation.
-     *
-     * @return an iterator over the stack elements
-     */
-    @Override
-    public Iterator<T> iterator();
-    
+	/**
+	 * Clears all the items from this Stack. This method returns, unless there is an
+	 * Exception (Runtime) thrown.
+	 */
+	public void clear();
 
-    /**
-     * Compares this stack with another stack for equality.
-     * Two stacks are considered equal if they contain the same elements
-     * in the same order (from top to bottom).
-     *
-     * @param that the other stack to compare
-     * @return true if both stacks are equal; false otherwise
-     */
-    public boolean equals(StackADT<T> that);
+	/**
+	 * Returns <code>true</code> if this Stack contains no items.
+	 * 
+	 * @return <code>true</code> if this Stack contains no items.
+	 */
+	public boolean isEmpty();
+
+	/**
+	 * Returns an array containing all of the elements in this list in proper
+	 * sequence. Obeys the general contract of the Collection.toArray method.
+	 * 
+	 * @return an array containing all of the elements in this list in proper
+	 *         sequence.
+	 */
+	public Object[] toArray();
+
+	/**
+	 * Returns an array containing all of the elements in this list in proper
+	 * sequence; the runtime type of the returned array is that of the specified
+	 * array. Obeys the general contract of the Collection.toArray(Object[]) method.
+	 * 
+	 * @param toHold the array into which the elements of this stack are to be
+	 *               stored, if it is big enough; otherwise, a new array of the same
+	 *               runtime type is allocated for this purpose.
+	 * @return an array containing the elements of this stack.
+	 * @throws NullPointerException if the specified array is null.
+	 */
+	public E[] toArray( E[] holder ) throws NullPointerException;
+
+	/**
+	 * Returns true if this list contains the specified element. More formally,
+	 * returns true if and only if this list contains at least one element e such
+	 * that (o==null ? e==null : o.equals(e)).
+	 * 
+	 * @param toFind element whose presence in this list is to be tested.
+	 * @return true if this list contains the specified element.
+	 * @throws NullPointerException if the specified element is null and this list
+	 *                              does not support null elements.
+	 */
+	public boolean contains( E toFind ) throws NullPointerException;
+
+	/**
+	 * Returns the 1-based position where an object is on this stack. If the object
+	 * o occurs as an item in this stack, this method returns the distance from the
+	 * top of the stack of the occurrence nearest the top of the stack; the topmost
+	 * item on the stack is considered to be at distance 1. The equals method is
+	 * used to compare o to the items in this stack.
+	 * 
+	 * @param toFind the desired object.
+	 * @return the 1-based position from the top of the stack where the object is
+	 *         located; the return value -1 indicates that the object is not on the
+	 *         stack.
+	 */
+	public int search( E toFind );
+
+	/**
+	 * Returns an iterator over the elements in this stack in proper sequence.
+	 * 
+	 * @return an iterator over the elements in this stack in proper sequence.
+	 */
+	public Iterator<E> iterator();
+
+	/**
+	 * Used to compare two Stack ADT's. To be equal two stacks must contain equal
+	 * items appearing in the same order.
+	 * 
+	 * @param that the Stack ADT to be compared to this stack.
+	 * @return <code>true</code> if the stacks are equal.
+	 */
+	public boolean equals( StackADT<E> that );
+
+	/**
+	 * Returns the depth of the current stack as an integer value.
+	 * 
+	 * @return the current size to the stack as an integer.
+	 */
+	public int size();
+	
+	/**
+	 * Returns true if the number of items in the stack equals the length.  
+	 * This operation is only implement when a fixed size stack is required.
+	 * @return <code>true</code> if stack is at capacity.
+	 */
+	public boolean stackOverflow();
 }
