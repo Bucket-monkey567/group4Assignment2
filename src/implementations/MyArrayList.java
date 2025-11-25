@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 import java.util.Arrays;
 
 // implemented ListADT to myarray list
-public class MyArrayList<E> {
+public class MyArrayList<E> implements ListADT<E> {
 	 private E[] data;
 	 private int size;
 	 private static final int DEFAULT_CAPACITY = 10;
