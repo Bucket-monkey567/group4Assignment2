@@ -6,13 +6,13 @@ import utilities.Iterator;
 import utilities.StackADT;
 
 /**
- * @author Alex Raagas
  * A stack implementation backed by a dynamic array-based list (MyArrayList).
  * <p>
  * This stack follows LIFO (Last-In, First-Out) behavior where new elements
  * are pushed to the top and popped from the top. Internally, the top of the
  * stack corresponds to the end of the underlying MyArrayList.
  * </p>
+ * @author Alex Raagas
  *
  * @param <E> the type of elements stored in the stack
  */

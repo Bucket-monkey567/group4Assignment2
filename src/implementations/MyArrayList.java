@@ -7,8 +7,8 @@ import java.util.NoSuchElementException;
 import java.util.Arrays;
 
 /**
- * @author Alex Raagas
  * A simplified dynamic array list implementation similar to Java's ArrayList.
+ * @author Alex Raagas
  *
  * @param <E> type of elements stored in the list
  */
