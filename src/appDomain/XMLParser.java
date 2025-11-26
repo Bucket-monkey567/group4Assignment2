@@ -33,6 +33,8 @@ public class XMLParser {
 
     // Queue of extra/mismatched closing tags
     MyQueue<Tag> extrasQ;
+    
+    boolean errorsFound = false;
 
     // Tracks current line number
     int counter;
@@ -192,6 +194,8 @@ public class XMLParser {
      */
     private void processRemaining() {
 
+        boolean errorsFound = false;
+
         // Move all leftover stack tags into error queue
         while (!stack.isEmpty()) {
             errorQ.enqueue(stack.pop());
@@ -203,6 +207,7 @@ public class XMLParser {
                 if (!errorQ.peek().tag.equals(extrasQ.peek().tag.replace("/", ""))) {
                     System.out.println(errorQ.dequeue().tag +
                             " does not match " + extrasQ.peek().tag);
+                    errorsFound = true;
                 } else {
                     errorQ.dequeue();
                     extrasQ.dequeue();
@@ -212,13 +217,15 @@ public class XMLParser {
             }
         }
 
-        // Print remaining entries
         System.out.println();
+
+        // Print remaining unmatched items
         while (!(errorQ.isEmpty() == extrasQ.isEmpty())) {
 
             while (!errorQ.isEmpty()) {
                 try {
                     System.out.println("ErrorQ: " + errorQ.dequeue().tag);
+                    errorsFound = true;
                 } catch (EmptyQueueException e) {
                     e.printStackTrace();
                 }
@@ -227,19 +234,21 @@ public class XMLParser {
             while (!extrasQ.isEmpty()) {
                 try {
                     System.out.println("ExtrasQ: " + extrasQ.dequeue().tag);
+                    errorsFound = true;
                 } catch (EmptyQueueException e) {
                     e.printStackTrace();
                 }
             }
         }
-        
+
         // -----------------------------------------------
         // SUCCESS MESSAGE
         // -----------------------------------------------
-        if (errorQ.isEmpty() && extrasQ.isEmpty()) {
-            System.out.println("XML is well-formed,no errors found");
+        if (!errorsFound) {
+            System.out.println("XML is well-formed, no errors found.");
         }
     }
+
 
     /**
      * Removes attributes from tags.
