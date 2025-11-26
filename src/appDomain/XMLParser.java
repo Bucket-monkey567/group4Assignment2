@@ -139,7 +139,7 @@ public class XMLParser {
 
                 // Case 3: No opening tags exist → extra closing tag
                 else if (stack.isEmpty()) {
-                    stack.push(new Tag(tag, lineNumber));
+                    errorQ.enqueue(new Tag(tag, lineNumber));
                 }
 
                 // Case 4: Search the stack for a matching opening tag
