@@ -1,12 +1,19 @@
 package implementations;
-
+/**
+ * @author Mrinal Jha
+ * Queue Handler
+ *
+ * @param <E> type of nodes stored in the list
+ */
 import exceptions.EmptyQueueException;
 import utilities.Iterator;
 import utilities.QueueADT;
 
 public class MyQueue<e> implements QueueADT<e> {
 	
-	//internal class
+	/**
+     * Creates a private class where it creates nodes for data to be stored in
+     */
     private class Node {
         e data;
         Node next;
@@ -20,29 +27,43 @@ public class MyQueue<e> implements QueueADT<e> {
     private Node rear;
     private int size = 0;
     
-    // Copy constructor: creates a new queue that is a deep copy of another queue
+    /**
+     * Creates a new queue which has the same data as another queue (copy constructor)
+     * 
+     * @param the pre-extablished queue
+     * @throw can't copy queue if queue DNE
+     */
     public MyQueue(QueueADT<e> other) throws NullPointerException {
         if (other == null)
             throw new NullPointerException("Cannot copy from a null queue");
 
-        // Initialize empty queue
+
         this.front = null;
         this.rear = null;
         this.size = 0;
 
-        // Copy all elements using the iterator
+
         Iterator<e> it = other.iterator();
         while (it.hasNext()) {
             this.enqueue(it.next());
         }
     }
     
+    /**
+     * Creates a new empty queue
+     */
     public MyQueue() {
         this.front = null;
         this.rear = null;
         this.size = 0;    	
     }
-
+    
+    /**
+     * Places a node at the end of the queue and increases the size of the queue if the queue is empty it makes a new node
+     * 
+     * @param toAdd, the data that is being added
+     * @throw Can't enqueue if ToAdd is null
+     */
 	@Override
 	public void enqueue(e toAdd) throws NullPointerException {
 		if (toAdd == null)
@@ -60,7 +81,13 @@ public class MyQueue<e> implements QueueADT<e> {
 		
 		size++;
 	}
-
+	
+	/**
+	 * Removes the node at the front of the queue
+	 * 
+	 * @throw Can't remive is queue is empty
+	 * @return The removed Node
+	 */
 	@Override
 	public e dequeue() throws EmptyQueueException {
 		if(isEmpty()) {
@@ -76,7 +103,13 @@ public class MyQueue<e> implements QueueADT<e> {
 		size--;
 		return removed;
 	}
-
+	
+	/**
+	 * Shows a 'peek' of the node
+	 * 
+	 * @throw cannot show the front node if queue is empty
+	 * @return The Front Node 
+	 */
 	@Override
 	public e peek() throws EmptyQueueException {
 		if (isEmpty())
@@ -84,7 +117,10 @@ public class MyQueue<e> implements QueueADT<e> {
 		
 		return front.data;
 	}
-
+	
+	/**
+	 * Removes all nodes and decreases size to zero
+	 */
 	@Override
 	public void dequeueAll() {
 		front = null;
@@ -93,11 +129,23 @@ public class MyQueue<e> implements QueueADT<e> {
 		
 	}
 
+	/**
+	 * Checks whether the queue is empty
+	 * 
+	 * @return True if isEmpty false if not
+	 */
 	@Override
 	public boolean isEmpty() {
 		return size == 0;
 	}
 
+	/**
+	 * Checks whether the queue has the desired data
+	 * 
+	 * @param toFind: the data that is being found
+	 * @throw NullPointerException Cannot find desired if ToFind is Empty
+	 * @return True if it exists False if it dosn't 
+	 */
 	@Override
 	public boolean contains(e toFind) throws NullPointerException {
 		if(toFind == null)
@@ -113,6 +161,12 @@ public class MyQueue<e> implements QueueADT<e> {
 		return false;
 	}
 
+	/**
+	 * Checks where the desired data is
+	 * 
+	 * @param toFind: the data that is being found
+	 * @return -1 if the data DNE, int that matches the placement of the node in queue if it dose exist
+	 */
 	@Override
 	public int search(e toFind) {
 		if (toFind == null)
@@ -132,6 +186,11 @@ public class MyQueue<e> implements QueueADT<e> {
 		
 	}
 
+	/**
+	 * Returns an iterator over the elements in this queue in proper sequence.
+	 * 
+	 * @return an iterator over the elements in this queue in proper sequence.
+	 */
 	@Override
 	public Iterator<e> iterator() {
 		return new Iterator<e>() {
@@ -154,6 +213,12 @@ public class MyQueue<e> implements QueueADT<e> {
 	    };
 	}
 
+	/**
+	 * Checks whether 2 Queues match in data
+	 * 
+	 * @param that, the other queue
+	 * @return False if they are not in same size or if they do not have the same data
+	 */
 	@Override
 	public boolean equals(QueueADT<e> that) {
 		if ((that == null) || (this.size != that.size()))
@@ -171,7 +236,12 @@ public class MyQueue<e> implements QueueADT<e> {
 		
 		return true;
 	}
-
+	
+	/**
+	 * Turns the queue into an array
+	 * 
+	 * @return The array that has the data of the queue
+	 */
 	@Override
 	public Object[] toArray() {
 		Object[] arr = new Object[size];
@@ -184,6 +254,12 @@ public class MyQueue<e> implements QueueADT<e> {
 		return arr;
  	}
 
+	/**
+	 * converts queue into array but the queue be put into the inputed array
+	 * 
+	 * @param holder: the inputted array
+	 * @throw NullPointerExpection: if holder is null
+	 */
 	@Override
 	public e[] toArray(e[] holder) throws NullPointerException {
 		if(holder == null)
@@ -201,11 +277,21 @@ public class MyQueue<e> implements QueueADT<e> {
 		return holder;
 	}
 
+	/**
+	 * Checks if queue is full
+	 * 
+	 * @return false DLL queues can never be full
+	 */
 	@Override
 	public boolean isFull() {
 		return false;
 	}
 
+	/**
+	 * returns the size of the queue
+	 * 
+	 * @return the size of the queue
+	 */
 	@Override
 	public int size() {
 		return size;
