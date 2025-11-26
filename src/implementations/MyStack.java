@@ -6,19 +6,34 @@ import utilities.Iterator;
 import utilities.StackADT;
 
 /**
- * MyStack implementation using MyArrayList as the underlying structure.
- * Fixes top-to-bottom order for toArray() and iterator() to match stack semantics.
+ * @author Alex Raagas
+ * A stack implementation backed by a dynamic array-based list (MyArrayList).
+ * <p>
+ * This stack follows LIFO (Last-In, First-Out) behavior where new elements
+ * are pushed to the top and popped from the top. Internally, the top of the
+ * stack corresponds to the end of the underlying MyArrayList.
+ * </p>
  *
- * @param <E> type of elements stored in the stack
+ * @param <E> the type of elements stored in the stack
  */
 public class MyStack<E> implements StackADT<E> {
 
+    /** The underlying dynamic list structure. */
     private MyArrayList<E> list;
 
+    /**
+     * Constructs an empty stack.
+     */
     public MyStack() {
         list = new MyArrayList<>();
     }
 
+    /**
+     * Pushes an element onto the top of the stack.
+     *
+     * @param toAdd the element to push
+     * @throws NullPointerException if the element is null
+     */
     @Override
     public void push(E toAdd) throws NullPointerException {
         if (toAdd == null)
@@ -26,6 +41,12 @@ public class MyStack<E> implements StackADT<E> {
         list.add(toAdd);
     }
 
+    /**
+     * Removes and returns the element at the top of the stack.
+     *
+     * @return the popped element
+     * @throws EmptyStackException if the stack is empty
+     */
     @Override
     public E pop() throws EmptyStackException {
         if (isEmpty())
@@ -33,6 +54,12 @@ public class MyStack<E> implements StackADT<E> {
         return list.remove(list.size() - 1);
     }
 
+    /**
+     * Returns the element at the top of the stack without removing it.
+     *
+     * @return the top element
+     * @throws EmptyStackException if the stack is empty
+     */
     @Override
     public E peek() throws EmptyStackException {
         if (isEmpty())
@@ -40,25 +67,45 @@ public class MyStack<E> implements StackADT<E> {
         return list.get(list.size() - 1);
     }
 
+    /**
+     * Removes all elements from the stack.
+     */
     @Override
     public void clear() {
         list.clear();
     }
 
+    /**
+     * Checks whether the stack is empty.
+     *
+     * @return true if the stack contains no elements
+     */
     @Override
     public boolean isEmpty() {
         return list.isEmpty();
     }
 
+    /**
+     * Returns an array containing all stack elements from top to bottom.
+     *
+     * @return an array representation of the stack
+     */
     @Override
     public Object[] toArray() {
         Object[] result = new Object[list.size()];
         for (int i = 0; i < list.size(); i++) {
-            result[i] = list.get(list.size() - 1 - i); // reverse order for stack
+            result[i] = list.get(list.size() - 1 - i);
         }
         return result;
     }
 
+    /**
+     * Fills the provided array with stack elements from top to bottom.
+     *
+     * @param holder the array into which elements are stored
+     * @return the filled array
+     * @throws NullPointerException if the provided array is null
+     */
     @Override
     @SuppressWarnings("unchecked")
     public E[] toArray(E[] holder) throws NullPointerException {
@@ -67,18 +114,30 @@ public class MyStack<E> implements StackADT<E> {
 
         int n = list.size();
         E[] result;
-        if (holder.length >= n) result = holder;
-        else result = (E[]) java.lang.reflect.Array.newInstance(holder.getClass().getComponentType(), n);
+
+        if (holder.length >= n)
+            result = holder;
+        else
+            result = (E[]) java.lang.reflect.Array.newInstance(
+                    holder.getClass().getComponentType(), n);
 
         for (int i = 0; i < n; i++) {
             result[i] = list.get(n - 1 - i);
         }
 
-        if (result.length > n) result[n] = null; // per Collection.toArray(E[]) contract
+        if (result.length > n)
+            result[n] = null;
 
         return result;
     }
 
+    /**
+     * Checks whether the stack contains a given element.
+     *
+     * @param toFind the element to locate
+     * @return true if the element exists in the stack
+     * @throws NullPointerException if toFind is null
+     */
     @Override
     public boolean contains(E toFind) throws NullPointerException {
         if (toFind == null)
@@ -86,6 +145,12 @@ public class MyStack<E> implements StackADT<E> {
         return list.contains(toFind);
     }
 
+    /**
+     * Searches for an element and returns its 1-based position from the top.
+     *
+     * @param toFind the element to search for
+     * @return position from the top, or -1 if not found
+     */
     @Override
     public int search(E toFind) {
         int pos = 1;
@@ -98,10 +163,15 @@ public class MyStack<E> implements StackADT<E> {
         return -1;
     }
 
+    /**
+     * Returns an iterator that traverses the stack from top to bottom.
+     *
+     * @return a stack iterator
+     */
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private int current = list.size() - 1; // start from top
+            private int current = list.size() - 1;
 
             @Override
             public boolean hasNext() {
@@ -117,6 +187,12 @@ public class MyStack<E> implements StackADT<E> {
         };
     }
 
+    /**
+     * Compares this stack to another stack for equality.
+     *
+     * @param that another stack
+     * @return true if both stacks contain identical elements (top→bottom)
+     */
     @Override
     public boolean equals(StackADT<E> that) {
         if (that == null || this.size() != that.size())
@@ -128,20 +204,33 @@ public class MyStack<E> implements StackADT<E> {
         while (it1.hasNext() && it2.hasNext()) {
             E a = it1.next();
             E b = it2.next();
-            if (!((a == null && b == null) || (a != null && a.equals(b))))
+            if (!((a == null && b == null) ||
+                  (a != null && a.equals(b))))
                 return false;
         }
-
         return true;
     }
 
+    /**
+     * Returns the number of elements in the stack.
+     *
+     * @return the stack size
+     */
     @Override
     public int size() {
         return list.size();
     }
 
+    /**
+     * Indicates whether the stack has overflowed.
+     * <p>
+     * This implementation is dynamically sized and cannot overflow.
+     * </p>
+     *
+     * @return false always
+     */
     @Override
     public boolean stackOverflow() {
-        return false; // dynamic stack, no fixed size
+        return false;
     }
 }
